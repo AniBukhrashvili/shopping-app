@@ -11,6 +11,12 @@
       "password": "$2a$10$6mXEgnxuVcOLpTSKRH9USuqM73jOtRmhvbTe7yyg0..txeHA/YMuW",
       "name": "Jane Doe",
       "id": 2
+    },
+    {
+      "email": "ani@test.com",
+      "password": "$2a$10$nd0g/G9Ne8l4aQG9h0qkoOZrxsOwlRwGbZ23sSwzr60UCaf/AAWKS",
+      "name": "Ani",
+      "id": 3
     }
   ],
   "products": [
