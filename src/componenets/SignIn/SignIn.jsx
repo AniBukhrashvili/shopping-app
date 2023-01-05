@@ -1,32 +1,39 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-import { Box, TextField, Button, Typography } from "@mui/material";
+import { Box, TextField, Button, Typography, Alert } from "@mui/material";
 import "./SignIn.css";
 
 const SignIn = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const response = await fetch("http://localhost:8000/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email,
-        password,
-      }),
-    });
-
-    const { accessToken } = await response.json();
-    localStorage.setItem("authToken", accessToken);
-
-    navigate("/products");
+    try {
+      const response = await fetch("http://localhost:8000/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
+      if (!response.ok) {
+        throw new Error("Email or Password is incorrect");
+      }
+      const { accessToken } = await response.json();
+      localStorage.setItem("authToken", accessToken);
+      navigate("/products");
+    } catch (error) {
+      console.error(error);
+      setError(error.message);
+    }
   };
 
   return (
@@ -48,6 +55,14 @@ const SignIn = () => {
           m: 20,
         }}
       >
+        {error && (
+          <Alert
+            severity="error"
+            sx={{ marginBottom: "6px", width: "27%", fontStyle: "italic" }}
+          >
+            {error}
+          </Alert>
+        )}
         <TextField
           id="outlined-size-small"
           label="Email"
