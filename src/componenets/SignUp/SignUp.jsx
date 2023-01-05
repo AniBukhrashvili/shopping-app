@@ -27,27 +27,6 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const response = await fetch("http://localhost:8000/users", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name,
-        email,
-        password,
-      }),
-    });
-
-    const data = await response.json();
-    console.log(data);
-
-    navigate("/");
-  };
-
   const formik = useFormik({
     initialValues: {
       fullName: "",
@@ -55,18 +34,28 @@ const SignUp = () => {
       password: "",
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => {
-      console.log("onSubmit", values);
+    onSubmit: async () => {
+      const response = await fetch("http://localhost:8000/users", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          password,
+        }),
+      });
+
+      const data = await response.json();
+      console.log(data);
+
+      navigate("/");
     },
   });
 
   return (
-    <form
-      onSubmit={(e) => {
-        handleSubmit();
-        formik.handleSubmit(e);
-      }}
-    >
+    <form onSubmit={formik.handleSubmit}>
       <Box
         sx={{
           display: "flex",
@@ -88,7 +77,7 @@ const SignUp = () => {
             setName(e.target.value);
             formik.handleChange(e);
           }}
-          error={formik.touched.fullName && formik.errors.fullName}
+          error={formik.touched.fullName && Boolean(formik.errors.fullName)}
           helperText={formik.touched.fullName && formik.errors.fullName}
         />
 
@@ -103,7 +92,7 @@ const SignUp = () => {
             setEmail(e.target.value);
             formik.handleChange(e);
           }}
-          error={formik.touched.email && formik.errors.email}
+          error={formik.touched.email && Boolean(formik.errors.email)}
           helperText={formik.touched.email && formik.errors.email}
         />
 
@@ -119,7 +108,7 @@ const SignUp = () => {
             setPassword(e.target.value);
             formik.handleChange(e);
           }}
-          error={formik.touched.password && formik.errors.password}
+          error={formik.touched.password && Boolean(formik.errors.password)}
           helperText={formik.touched.password && formik.errors.password}
         />
 
