@@ -4,3 +4,7 @@
     color: #1976d2;
     margin-left: 70px;
 }
+
+.helper-text {
+    font-style: italic;
+}

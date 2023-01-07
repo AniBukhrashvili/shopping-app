@@ -27,8 +27,13 @@ const SignIn = () => {
       if (!response.ok) {
         throw new Error("Email or Password is incorrect");
       }
-      const { accessToken } = await response.json();
+      const data = await response.json();
+      const name = data.user.name;
+      const accessToken = data.accessToken;
+
+      localStorage.setItem("Name", name);
       localStorage.setItem("authToken", accessToken);
+
       navigate("/products");
     } catch (error) {
       console.error(error);

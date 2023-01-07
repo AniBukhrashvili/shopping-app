@@ -79,6 +79,7 @@ const SignUp = () => {
           }}
           error={formik.touched.fullName && Boolean(formik.errors.fullName)}
           helperText={formik.touched.fullName && formik.errors.fullName}
+          FormHelperTextProps={{ className: "helper-text" }}
         />
 
         <TextField
@@ -94,6 +95,7 @@ const SignUp = () => {
           }}
           error={formik.touched.email && Boolean(formik.errors.email)}
           helperText={formik.touched.email && formik.errors.email}
+          FormHelperTextProps={{ className: "helper-text" }}
         />
 
         <TextField
@@ -110,6 +112,7 @@ const SignUp = () => {
           }}
           error={formik.touched.password && Boolean(formik.errors.password)}
           helperText={formik.touched.password && formik.errors.password}
+          FormHelperTextProps={{ className: "helper-text" }}
         />
 
         <Button type="submit" sx={{ width: "30%", m: 0.9 }} variant="outlined">
