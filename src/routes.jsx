@@ -1,9 +1,9 @@
 import { createBrowserRouter } from "react-router-dom";
 
-import SignIn from "./componenets/SignIn/SignIn";
-import SignUp from "./componenets/SignUp/SignUp";
-import Products from "./componenets/Products/Products";
-import ShoppingCart from "./componenets/ShoppingCart/ShoppingCart";
+import SignIn from "./pages/signin/SignIn";
+import SignUp from "./pages/signup/SignUp";
+import Products from "./pages/products/Products";
+import ShoppingCart from "./pages/shopping-cart/ShoppingCart";
 
 import { authPagesLoader } from "./loaders/auth.loader";
 import { protectedPagesLoader } from "./loaders/protected.loader";

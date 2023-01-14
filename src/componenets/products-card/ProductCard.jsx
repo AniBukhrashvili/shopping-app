@@ -1,15 +1,16 @@
 import React from "react";
+
 import { Button, Rating, Typography, Box } from "@mui/material";
 import "./ProductsCard.css";
 
 const ProductCard = (props) => {
   // const photos = props.photos.map((photo) => <img src={photo} />);
   // console.log(photos);
-
+  const { id, photos, title, review, price } = props;
   return (
-    <Box key={props.id} className="card-container">
+    <Box key={id} className="card-container">
       <Box>
-        <img src={props.photos} />
+        <img src={photos[0]} />
         <hr />
         <Box>
           <Box className="wrapper">
@@ -20,18 +21,18 @@ const ProductCard = (props) => {
                 fontFamily: "Monospace",
               }}
             >
-              {props.title}
+              {title}
             </Typography>
             <Rating
               name="half-rating-read"
-              defaultValue={props.review}
+              defaultValue={review}
               precision={0.1}
               readOnly
             />
           </Box>
           <Box className="wrapper">
             <Typography sx={{ fontWeight: "bold", fontSize: "18px" }}>
-              ${props.price}
+              ${price}
             </Typography>
             <Button variant="contained">add to cart</Button>
           </Box>

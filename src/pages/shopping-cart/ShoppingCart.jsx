@@ -1,5 +1,5 @@
 import React from "react";
-import NavBar from "../NavBar/NavBar";
+import NavBar from "../../componenets/navbar/NavBar";
 
 const ShoppingCart = () => {
   return (
