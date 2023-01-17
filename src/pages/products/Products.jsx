@@ -3,6 +3,7 @@ import { parseJwt } from "../../helpers/jwt.helper";
 
 import NavBar from "../../componenets/navbar/NavBar";
 import ProductCard from "../../componenets/products-card/ProductCard";
+import ProductFilter from "../../componenets/product-filter/ProductsFilter";
 import { fetchProducts } from "./Products.services";
 
 import { Button, Grid, Pagination, Typography } from "@mui/material";
@@ -15,6 +16,8 @@ const Products = () => {
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(9);
   const [order, setOrder] = useState(null);
+  const [max, setMax] = useState(0);
+  const [min, setMin] = useState(0);
   const [products, setProducts] = useState([]);
   const totalPages = Math.floor(totalItem / limit) + 1;
 
@@ -22,10 +25,10 @@ const Products = () => {
     const token = localStorage.getItem("authToken");
     const { sub } = parseJwt(token);
 
-    fetchProducts(token, page, limit, order, sub).then((data) =>
+    fetchProducts(token, page, limit, order, max, min, sub).then((data) =>
       setProducts(data)
     );
-  }, [page, limit, order]);
+  }, [page, limit, order, max, min]);
 
   const handleSortProducts = () => {
     const newOrder = order === "asc" ? "desc" : "asc";
@@ -41,21 +44,26 @@ const Products = () => {
     setProducts(data);
   };
 
+  const handleProductsFilter = (max, min) => {
+    setMax(max);
+    setMin(min);
+  };
+
   return (
     <>
       <NavBar />
       <Grid container spacing={2} justifyContent="center" display="flex">
         <Grid container item md={1} xs={12} mt="35px">
-          Filters
+          <ProductFilter max={0} min={0} onChange={handleProductsFilter} />
         </Grid>
 
-        <Grid container display="flex" item md={10} xs={12} spacing={3}>
+        <Grid container display="flex" item md={9.5}>
           {products.map((product) => (
             <ProductCard key={product.id} {...product} />
           ))}
         </Grid>
 
-        <Grid container item md={1} xs={12} height="32%" mt="35px">
+        <Grid item md={1} height="32%" mt="35px">
           <Button variant="outlined" onClick={handleSortProducts}>
             Price
             {order === "asc" ? (
