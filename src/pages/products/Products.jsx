@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
+import debounce from "lodash/debounce";
 import { parseJwt } from "../../helpers/jwt.helper";
 
 import NavBar from "../../componenets/navbar/NavBar";
 import ProductCard from "../../componenets/products-card/ProductCard";
 import ProductFilter from "../../componenets/product-filter/ProductsFilter";
+import Search from "../../componenets/search/Search";
 import { fetchProducts } from "./Products.services";
 
 import { Button, Grid, Pagination, Typography } from "@mui/material";
@@ -18,6 +20,7 @@ const Products = () => {
   const [order, setOrder] = useState(null);
   const [max, setMax] = useState(0);
   const [min, setMin] = useState(0);
+  const [name, setName] = useState("");
   const [products, setProducts] = useState([]);
   const totalPages = Math.floor(totalItem / limit) + 1;
 
@@ -25,10 +28,10 @@ const Products = () => {
     const token = localStorage.getItem("authToken");
     const { sub } = parseJwt(token);
 
-    fetchProducts(token, page, limit, order, max, min, sub).then((data) =>
+    fetchProducts(token, page, limit, order, max, min, name, sub).then((data) =>
       setProducts(data)
     );
-  }, [page, limit, order, max, min]);
+  }, [page, limit, order, max, min, name]);
 
   const handleSortProducts = () => {
     const newOrder = order === "asc" ? "desc" : "asc";
@@ -58,6 +61,10 @@ const Products = () => {
         </Grid>
 
         <Grid container display="flex" item md={9.5}>
+          {/* <Grid container display="flex" item mt="30px" justifyContent="center">
+            <Search />
+          </Grid> */}
+
           {products.map((product) => (
             <ProductCard key={product.id} {...product} />
           ))}
