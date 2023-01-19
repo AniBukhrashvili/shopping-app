@@ -30,9 +30,11 @@ const SignIn = () => {
       const data = await response.json();
       const name = data.user.name;
       const accessToken = data.accessToken;
+      const userId = data.user.id;
 
       localStorage.setItem("Name", name);
       localStorage.setItem("authToken", accessToken);
+      localStorage.setItem("userId", userId);
 
       navigate("/products");
     } catch (error) {

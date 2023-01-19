@@ -1,16 +1,23 @@
 import React, { useEffect, useState, useCallback } from "react";
 import debounce from "lodash/debounce";
-import { parseJwt } from "../../helpers/jwt.helper";
 
 import NavBar from "../../componenets/navbar/NavBar";
 import ProductCard from "../../componenets/products-card/ProductCard";
 import ProductFilter from "../../componenets/product-filter/ProductsFilter";
-import Search from "../../componenets/search/Search";
 import { fetchProducts } from "./Products.services";
 
-import { Button, Grid, Pagination, Typography } from "@mui/material";
+import {
+  Button,
+  Grid,
+  Pagination,
+  Typography,
+  IconButton,
+  Box,
+  Input,
+} from "@mui/material";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import SearchIcon from "@mui/icons-material/Search";
 
 const totalItem = 20;
 
@@ -24,14 +31,26 @@ const Products = () => {
   const [products, setProducts] = useState([]);
   const totalPages = Math.floor(totalItem / limit) + 1;
 
-  useEffect(() => {
-    const token = localStorage.getItem("authToken");
-    const { sub } = parseJwt(token);
+  const debouncedSearchProducts = useCallback(
+    debounce(async (name, page, limit, order, max, min) => {
+      const token = localStorage.getItem("authToken");
 
-    fetchProducts(token, page, limit, order, max, min, name, sub).then((data) =>
-      setProducts(data)
-    );
-  }, [page, limit, order, max, min, name]);
+      fetchProducts(token, name, page, limit, order, max, min).then((data) =>
+        setProducts(data)
+      );
+    }, 400),
+    []
+  );
+
+  useEffect(() => {
+    if (name) {
+      debouncedSearchProducts(name);
+    }
+  }, [name]);
+
+  useEffect(() => {
+    debouncedSearchProducts(name, page, limit, order, max, min);
+  }, [name, page, limit, order, max, min]);
 
   const handleSortProducts = () => {
     const newOrder = order === "asc" ? "desc" : "asc";
@@ -42,8 +61,7 @@ const Products = () => {
     setPage(nextPage);
 
     const token = localStorage.getItem("authToken");
-    const { sub } = parseJwt(token);
-    const data = await fetchProducts(token, nextPage, limit, sub);
+    const data = await fetchProducts(token, name, nextPage, limit);
     setProducts(data);
   };
 
@@ -61,9 +79,23 @@ const Products = () => {
         </Grid>
 
         <Grid container display="flex" item md={9.5}>
-          {/* <Grid container display="flex" item mt="30px" justifyContent="center">
-            <Search />
-          </Grid> */}
+          <Grid container display="flex" item mt="30px" justifyContent="center">
+            <Box>
+              <Input
+                sx={{
+                  ml: 1,
+                  flex: 1,
+                  width: "700px",
+                }}
+                placeholder="Search"
+                onChange={(e) => setName(e.target.value)}
+                value={name}
+              />
+              <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
+                <SearchIcon />
+              </IconButton>
+            </Box>
+          </Grid>
 
           {products.map((product) => (
             <ProductCard key={product.id} {...product} />

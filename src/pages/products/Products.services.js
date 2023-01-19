@@ -1,6 +1,6 @@
 const API_URL = 'http://localhost:8000/products/';
 
-export const fetchProducts = async(token, page, limit, order = 'asc', maxValue = 0, minValue = 0, name) => {
+export const fetchProducts = async(token, name, page, limit, order = 'asc', maxValue = 0, minValue = 0) => {
     let url = `${API_URL}?_page=${page}&_limit=${limit}`;
 
     if (order) {
@@ -16,7 +16,7 @@ export const fetchProducts = async(token, page, limit, order = 'asc', maxValue =
     }
 
     if (name) {
-        url += `?q=${name}`;
+        url += `&q=${name}`;
     }
 
     const response = await fetch(url, {
