@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { Grid, Typography } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 
 import Cart from "../../componenets/cart/Cart";
 import NavBar from "../../componenets/navbar/NavBar";
@@ -54,7 +54,7 @@ const ShoppingCart = () => {
   };
 
   return (
-    <>
+    <Box sx={{ backgroundColor: "#e3e8e3" }}>
       <NavBar />
       <Grid container display="flex">
         {products.length > 0 ? (
@@ -67,7 +67,7 @@ const ShoppingCart = () => {
           </Grid>
         )}
       </Grid>
-    </>
+    </Box>
   );
 };
 

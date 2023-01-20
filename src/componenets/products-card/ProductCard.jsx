@@ -26,7 +26,7 @@ const ProductCard = (props) => {
         throw new Error(response.statusText);
       }
       const data = await response.json();
-
+      alert("Product is added");
       console.log(data.productId);
     } catch (error) {
       console.error(error);
@@ -60,7 +60,14 @@ const ProductCard = (props) => {
             <Typography sx={{ fontWeight: "bold", fontSize: "18px" }}>
               ${price}
             </Typography>
-            <Button variant="contained" onClick={addToCard}>
+            <Button
+              variant="contained"
+              onClick={addToCard}
+              sx={{
+                backgroundColor: "#52796f",
+                ":hover": { backgroundColor: "#255045" },
+              }}
+            >
               add to cart
             </Button>
           </Box>

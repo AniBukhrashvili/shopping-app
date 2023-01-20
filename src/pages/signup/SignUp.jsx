@@ -116,7 +116,17 @@ const SignUp = () => {
           FormHelperTextProps={{ className: "helper-text" }}
         />
 
-        <Button type="submit" sx={{ width: "30%", m: 0.9 }} variant="outlined">
+        <Button
+          type="submit"
+          sx={{
+            width: "30%",
+            m: 0.9,
+            borderColor: "#52796f",
+            color: "#52796f",
+            ":hover": { borderColor: "#255045" },
+          }}
+          variant="outlined"
+        >
           Register
         </Button>
 

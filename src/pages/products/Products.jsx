@@ -65,7 +65,7 @@ const Products = () => {
   };
 
   return (
-    <>
+    <Box sx={{ backgroundColor: "#e3e8e3" }}>
       <NavBar />
       <Grid container spacing={2} justifyContent="center" display="flex">
         <Grid container item md={1} xs={12} mt="35px">
@@ -97,7 +97,15 @@ const Products = () => {
         </Grid>
 
         <Grid item md={1} height="32%" mt="35px">
-          <Button variant="outlined" onClick={handleSortProducts}>
+          <Button
+            variant="outlined"
+            onClick={handleSortProducts}
+            sx={{
+              borderColor: "#52796f",
+              color: "#52796f",
+              ":hover": { borderColor: "#255045" },
+            }}
+          >
             Price
             {order === "asc" ? (
               <KeyboardArrowUpIcon />
@@ -117,7 +125,7 @@ const Products = () => {
         </Grid>
       </Grid>
 
-      <Grid container item margin="15px" justifyContent="center">
+      <Grid container item justifyContent="center">
         <Pagination
           shape="rounded"
           count={totalPages}
@@ -125,7 +133,7 @@ const Products = () => {
           onChange={handlePaginationChange}
         />
       </Grid>
-    </>
+    </Box>
   );
 };
 

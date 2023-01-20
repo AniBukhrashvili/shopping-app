@@ -85,7 +85,17 @@ const SignIn = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <Button sx={{ width: "30%", m: 0.9 }} variant="outlined" type="submit">
+        <Button
+          sx={{
+            width: "30%",
+            m: 0.9,
+            borderColor: "#52796f",
+            color: "#52796f",
+            ":hover": { borderColor: "#255045" },
+          }}
+          variant="outlined"
+          type="submit"
+        >
           Login
         </Button>
         <Box sx={{ m: 2 }}>
