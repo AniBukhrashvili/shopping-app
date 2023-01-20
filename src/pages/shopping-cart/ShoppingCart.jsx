@@ -1,32 +1,71 @@
-import { Grid } from "@mui/material";
-import React from "react";
-import { parseJwt } from "../../helpers/jwt.helper";
-import { fetchProducts } from "../products/Products.services";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
+
+import { Grid, Typography } from "@mui/material";
 
 import Cart from "../../componenets/cart/Cart";
-
 import NavBar from "../../componenets/navbar/NavBar";
 
 const ShoppingCart = () => {
   const [products, setProducts] = useState([]);
-  const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(9);
+
+  const token = localStorage.getItem("authToken");
+  const userId = localStorage.getItem("userId");
+
+  const fetchData = async () => {
+    const cartResponse = await fetch(
+      `http://localhost:8000/user/${userId}/carts/`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    const cartData = await cartResponse.json();
+    const productIds = cartData.map((obj) => obj.productId);
+    console.log(cartData);
+    const requests = productIds.map(async (id) => {
+      const response = await fetch(`http://localhost:8000/products?id=${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const data = await response.json();
+      setProducts((prevProducts) => [...prevProducts, ...data]);
+    });
+    console.log(requests);
+  };
 
   useEffect(() => {
-    const token = localStorage.getItem("authToken");
-    const { sub } = parseJwt(token);
+    fetchData();
+  }, [userId]);
 
-    fetchProducts(token, page, limit, sub).then((data) => setProducts(data));
-  }, [page, limit]);
+  const deleteCart = async (productId) => {
+    const response = await fetch(`http://localhost:8000/carts/${productId}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const data = await response.json();
+    console.log(data);
+    setProducts((prevProducts) =>
+      prevProducts.filter((product) => product.id !== productId)
+    );
+  };
 
   return (
     <>
       <NavBar />
-      <Grid container display="flex" item md={9.5}>
-        {products.map((product) => (
-          <Cart key={product.id} {...product} />
-        ))}
+      <Grid container display="flex">
+        {products.length > 0 ? (
+          products.map((product) => (
+            <Cart key={product.id} {...product} deleteCart={deleteCart} />
+          ))
+        ) : (
+          <Grid container justifyContent="center" alignItems="center">
+            <Typography variant="h3">Shopping Cart Is Empty</Typography>
+          </Grid>
+        )}
       </Grid>
     </>
   );

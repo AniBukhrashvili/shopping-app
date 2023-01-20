@@ -2,12 +2,12 @@ import { Button, Rating, Typography, Box } from "@mui/material";
 import "./Cart.css";
 
 const Cart = (props) => {
-  const { id, photos, title, review, description, price } = props;
+  const { id, photos, title, review, description, price, deleteCart } = props;
 
   return (
     <Box key={id} className="card-div">
       <Box>
-        <img src={photos[0]} />
+        <img src={photos[0]} className="cart-img" />
       </Box>
       <Box>
         <Typography>{title}</Typography>
@@ -23,7 +23,11 @@ const Cart = (props) => {
           <Typography sx={{ fontWeight: "bold", fontSize: "18px" }}>
             ${price}
           </Typography>
-          <Button variant="contained" color="error">
+          <Button
+            variant="contained"
+            color="error"
+            onClick={() => deleteCart(id)}
+          >
             delete
           </Button>
         </Box>

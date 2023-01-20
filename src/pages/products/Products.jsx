@@ -43,12 +43,6 @@ const Products = () => {
   );
 
   useEffect(() => {
-    if (name) {
-      debouncedSearchProducts(name);
-    }
-  }, [name]);
-
-  useEffect(() => {
     debouncedSearchProducts(name, page, limit, order, max, min);
   }, [name, page, limit, order, max, min]);
 

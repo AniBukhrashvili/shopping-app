@@ -9,7 +9,7 @@ const ProductCard = (props) => {
   const addToCard = async () => {
     try {
       const token = localStorage.getItem("authToken");
-      const ownerId = localStorage.getItem("userId");
+      const userId = localStorage.getItem("userId");
 
       const response = await fetch("http://localhost:8000/carts", {
         method: "POST",
@@ -19,7 +19,7 @@ const ProductCard = (props) => {
         },
         body: JSON.stringify({
           productId: id,
-          userId: ownerId,
+          userId: userId,
         }),
       });
       if (!response.ok) {
@@ -27,7 +27,7 @@ const ProductCard = (props) => {
       }
       const data = await response.json();
 
-      console.log(data);
+      console.log(data.productId);
     } catch (error) {
       console.error(error);
     }
@@ -36,7 +36,7 @@ const ProductCard = (props) => {
   return (
     <Box key={id} className="card-container">
       <Box>
-        <img src={photos[0]} />
+        <img src={photos[0]} className="card-img" />
         <hr />
         <Box>
           <Box className="wrapper">
