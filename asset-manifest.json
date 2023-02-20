@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/AniBukhrashvili/shopping-app.git/static/css/main.acebd583.css",
+    "main.js": "/AniBukhrashvili/shopping-app.git/static/js/main.3f5e390d.js",
+    "static/js/787.eaad36ba.chunk.js": "/AniBukhrashvili/shopping-app.git/static/js/787.eaad36ba.chunk.js",
+    "index.html": "/AniBukhrashvili/shopping-app.git/index.html",
+    "main.acebd583.css.map": "/AniBukhrashvili/shopping-app.git/static/css/main.acebd583.css.map",
+    "main.3f5e390d.js.map": "/AniBukhrashvili/shopping-app.git/static/js/main.3f5e390d.js.map",
+    "787.eaad36ba.chunk.js.map": "/AniBukhrashvili/shopping-app.git/static/js/787.eaad36ba.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.acebd583.css",
+    "static/js/main.3f5e390d.js"
+  ]
+}
