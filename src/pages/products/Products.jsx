@@ -65,7 +65,7 @@ const Products = () => {
   };
 
   return (
-    <Box>
+    <Box sx={{ backgroundColor: "#e3e8e3" }}>
       <NavBar />
       <Grid container spacing={2} justifyContent="center" display="flex">
         <Grid container item md={1} xs={12} mt="35px">
