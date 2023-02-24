@@ -2,8 +2,7 @@
 
 ## პროექტის გაშვება:
 ```bash
-npm run client
-npm run server
+npm start
 ```
 
 ## პროექტის აღწერა:
